@@ -1,6 +1,6 @@
 import os
 
-from sqlalchemy import create_engine, Column, String, Integer
+from sqlalchemy import create_engine, Column, String, Integer, Float
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 #Criando Banco de dados.
@@ -24,11 +24,11 @@ class Funcionario(Base):
     idade = Column("idade", Integer)
     cpf = Column("cpf", Integer)
     setor = Column("setor", String)
-    salario = Column("salario", float)
+    salario = Column("salario", Float)
     funcao = Column("funcao", String)
     telefone = Column("telefone", Integer)
 
-    def __init__(self, nome: str, idade: int, cpf: int, setor: str, salario: float, funcao: str, telefone: int):
+    def __init__(self, nome: str, idade: int, cpf: int, setor: str, salario: Float, funcao: str, telefone: int):
         self.nome = nome
         self.idade = idade
         self.cpf = cpf
