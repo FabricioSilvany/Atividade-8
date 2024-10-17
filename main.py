@@ -14,6 +14,16 @@ session = Session()
 #Criando tabela
 Base = declarative_base()
 
+def menu ():
+    print("""
+           == RH SISTEM == 
+    1 || Adicionar funcionário.
+    2 || Consultar um funcionário.
+    3 || Atualizar os dados de um funcionário.
+    4 || Excluir um funcionário.
+    5 || Listar todos os funcionários.
+    0 || Sair do sistema.   
+    """)
 
 class Funcionario(Base):
     __tablename__ = "funcionarios"
@@ -43,3 +53,23 @@ class Funcionario(Base):
     #Salvando banco de dados
     os.system("cls || clear")
 
+while True:
+    menu()
+    opcao = input("\nDigite o numero da operação desejada: ")
+    
+    match(opcao):
+        case 1:
+            #1 || Adicionar funcionário.
+        case 2:
+            #2 || Consultar um funcionário.
+        case 3:
+            #3 || Atualizar os dados de um funcionário.
+        case 4:
+            #4 || Excluir um funcionário.
+        case 5:
+            #5 || Listar todos os funcionários.
+        case 0:
+            #0 || Sair do sistema.
+            break
+        case _:
+            print("Opção invalida \nTente novamente")
