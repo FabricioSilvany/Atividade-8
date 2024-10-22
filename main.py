@@ -32,13 +32,13 @@ class Funcionario(Base):
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     nome = Column("nome", String)
     idade = Column("idade", Integer)
-    cpf = Column("cpf", Integer)
+    cpf = Column("cpf", String)
     setor = Column("setor", String)
     salario = Column("salario", Float)
     funcao = Column("funcao", String)
-    telefone = Column("telefone", Integer)
+    telefone = Column("telefone", String)
 
-    def __init__(self, nome: str, idade: int, cpf: int, setor: str, salario: Float, funcao: str, telefone: int):
+    def __init__(self, nome: str, idade: int, cpf: str, setor: str, salario: Float, funcao: str, telefone: str):
         self.nome = nome
         self.idade = idade
         self.cpf = cpf
@@ -57,10 +57,10 @@ class Funcionario(Base):
 #Criando funções
 def salvar_funcionarios(funcionario):
     inserir_nome = input("Insira seu nome: ")
-    inserir_idade = input("Insira sua idade: ")
+    inserir_idade = int(input("Insira sua idade: "))
     inserir_cpf = input("Insira seu cpf: ")
     inserir_setor = input("Insira seu setor: ")
-    inserir_salario = input("Insira seu salário: ")
+    inserir_salario = float(input("Insira seu salário: "))
     inserir_funcao = input("Insira seu setor: ")
     inserir_telefone = input("Insira seu telefone: ")
 
@@ -81,8 +81,22 @@ def listar_todos_funcionarios():
 def pesquisar_funcionario(funcionario):
     cpf_funcionario = input("Informe o cpf do funcionário: ")
     funcionario = session.query(Funcionario).filter_by(cpf = cpf_funcionario).first()
+    print(f"{funcionario}")
+ 
+def atualizar_funcionario(funcionario):
+    cpf_funcionario = input("Informe o cpf do funcionário: ")
+    funcionario = session.query(Funcionario).filter_by(cpf = cpf_funcionario).first()
 
-    return funcionario
+    novos_dados = Funcionario(
+        nome = input("Informe o nome do funcionário: "),
+        idade = int(input("Informe a idade do funcionário: ")),
+        cpf = input("Informe o cpf do funcionário: "),
+        setor = input("Informe o setor do funcionário: "),
+        salario = float(input("Informe o salário do funcionário: "))
+        funcao = input("Informe qual função o funcionário exerce: ")
+        telefone = input("Informe ")
+    )
+
 
 while True:
     menu()
@@ -92,8 +106,9 @@ while True:
         case 1:
             pass
             #1 || Adicionar funcionário.
+            adicionando_funcionario = salvar_funcionarios()
         case 2:
-            pass
+            busca_funcionario = pesquisar_funcionario()
             #2 || Consultar um funcionário.
         case 3:
             pass
@@ -102,7 +117,7 @@ while True:
             pass
             #4 || Excluir um funcionário.
         case 5:
-            pass
+            listando_funcionario = listar_todos_funcionarios()
             #5 || Listar todos os funcionários.
         case 0:
             #0 || Sair do sistema.
