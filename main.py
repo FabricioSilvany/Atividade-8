@@ -47,44 +47,50 @@ class Funcionario(Base):
         self.funcao = funcao
         self.telefone = telefone
 
-    #Criando tabela no banco de dados
-    Base.metadata.create_all(bind=MEU_BANCO)
+#Criando tabela no banco de dados
+Base.metadata.create_all(bind=MEU_BANCO)
 
-    #Salvando banco de dados
-    os.system("cls || clear")
+#Salvando banco de dados
+os.system("cls || clear")
 
 
 #Criando funções
 def salvar_funcionarios(funcionario):
-    inserir_nome = input("Insira seu nome: ")
-    inserir_idade = int(input("Insira sua idade: "))
-    inserir_cpf = input("Insira seu cpf: ")
-    inserir_setor = input("Insira seu setor: ")
-    inserir_salario = float(input("Insira seu salário: "))
-    inserir_funcao = input("Insira seu setor: ")
-    inserir_telefone = input("Insira seu telefone: ")
+    inserir_nome = input("Insira o nome do funcionário: ")
+    inserir_idade = int(input("Insira a idade do funcionário: "))
+    inserir_cpf = input("Insira o cpf do funcionário: ")
+    inserir_setor = input("Insira o setor do funcionário: ")
+    inserir_salario = float(input("Insira o salário do funcionário: "))
+    inserir_funcao = input("Insira a função do funcionário: ")
+    inserir_telefone = input("Insira o telefone do funcionário: ")
 
     funcionario = Funcionario(nome=inserir_nome, idade=inserir_idade, cpf=inserir_cpf, setor=inserir_setor, salario=inserir_salario, funcao=inserir_funcao, telefone=inserir_telefone)
 
     session.add(funcionario)
     session.commit()
 
+    os.system("cls || clear")
     print("Funcionário salvo!")
+
     return funcionario
 
-def listar_todos_funcionarios():
+def listar_todos_funcionarios(funcionario):
     lista_funcionarios = session.query(Funcionario).all()
 
     for funcionario in lista_funcionarios:
-        print(f"{funcionario.nome} \n{funcionario.idade} \n{funcionario.cpf} \n{funcionario.setor} \n{funcionario.salario} \n{funcionario.funcao} \n{funcionario.telefone}")   
+        print(f"Nome: {funcionario.nome} \nIdade: {funcionario.idade} \nCPF: {funcionario.cpf} \nSetor: {funcionario.setor} \nSalário: {funcionario.salario} \nFunção: {funcionario.funcao} \nTelefone: {funcionario.telefone}\n")   
 
 def pesquisar_funcionario(funcionario):
     cpf_funcionario = input("Informe o cpf do funcionário: ")
+    os.system("cls || clear")
     funcionario = session.query(Funcionario).filter_by(cpf = cpf_funcionario).first()
-    print(f"{funcionario}")
- 
+
+    print(f"Dados do funcionário: \nNome: {funcionario.nome} \nIdade: {funcionario.idade} \nCPF: {funcionario.cpf} \nSetor: {funcionario.setor} \nSalário: {funcionario.salario} \nFunção: {funcionario.funcao} \nTelefone: {funcionario.telefone}")
+
 def atualizar_funcionario(funcionario):
-    cpf_funcionario = input("Informe o cpf do funcionário: ")
+    cpf_funcionario = input("Informe o cpf do funcionário para atualização: ")
+    os.system("cls || clear")
+
     funcionario = session.query(Funcionario).filter_by(cpf = cpf_funcionario).first()
 
     novos_dados = Funcionario(
@@ -94,11 +100,15 @@ def atualizar_funcionario(funcionario):
         setor = input("Informe o setor do funcionário: "),
         salario = float(input("Informe o salário do funcionário: ")),
         funcao = input("Informe qual função o funcionário exerce: "),
-        telefone = input("Informe "))
+        telefone = input("Informe o telefone do funcionário: "))
+    
+    funcionario = novos_dados
+    session.add(funcionario)
+    session.commit()
 
+    os.system("cls || clear")
     print("Funcionário atualizado")
     return funcionario, novos_dados
-
 
 def excluir_funcionario(funcionario):
     cpf_funcionario = input("Digite o cpf do funcionario a ser excluido: ")
@@ -154,4 +164,5 @@ while True:
             print("Opção invalida \nTente novamente")
 
 
-    
+#Fechando conexão.
+session.close()
