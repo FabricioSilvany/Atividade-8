@@ -1,3 +1,9 @@
+"""
+Integrantes: Fabrício Silvany / Victor Andrade
+"""
+
+
+
 import os
 
 from sqlalchemy import create_engine, Column, String, Integer, Float
