@@ -69,14 +69,14 @@ def salvar_funcionarios(funcionario):
     session.add(funcionario)
     session.commit()
 
+    print("Funcionário salvo!")
     return funcionario
 
 def listar_todos_funcionarios():
     lista_funcionarios = session.query(Funcionario).all()
 
     for funcionario in lista_funcionarios:
-        print(f"{funcionario.nome} \n{funcionario.idade} \n{funcionario.cpf} \n{funcionario.setor} \n{funcionario.salario} \n{funcionario.funcao} \n{funcionario.telefone}")
-    
+        print(f"{funcionario.nome} \n{funcionario.idade} \n{funcionario.cpf} \n{funcionario.setor} \n{funcionario.salario} \n{funcionario.funcao} \n{funcionario.telefone}")   
 
 def pesquisar_funcionario(funcionario):
     cpf_funcionario = input("Informe o cpf do funcionário: ")
@@ -92,36 +92,64 @@ def atualizar_funcionario(funcionario):
         idade = int(input("Informe a idade do funcionário: ")),
         cpf = input("Informe o cpf do funcionário: "),
         setor = input("Informe o setor do funcionário: "),
-        salario = float(input("Informe o salário do funcionário: "))
-        funcao = input("Informe qual função o funcionário exerce: ")
-        telefone = input("Informe ")
-    )
+        salario = float(input("Informe o salário do funcionário: ")),
+        funcao = input("Informe qual função o funcionário exerce: "),
+        telefone = input("Informe "))
 
+    print("Funcionário atualizado")
+    return funcionario, novos_dados
+
+
+def excluir_funcionario(funcionario):
+    cpf_funcionario = input("Digite o cpf do funcionario a ser excluido: ")
+
+    funcionario = session.query(Funcionario).filter_by(cpf = cpf_funcionario).first()
+    session.delete(funcionario)
+    session.commit()
+
+    print("\nFuncionário excluido.")
 
 while True:
     menu()
-    opcao = input("\nDigite o numero da operação desejada: ")
+    opcao = int(input("\nDigite o numero da operação desejada: "))
+
+    os.system("cls || clear")
     
     match(opcao):
         case 1:
             pass
             #1 || Adicionar funcionário.
-            adicionando_funcionario = salvar_funcionarios()
+            adicionando_funcionario = salvar_funcionarios(opcao)
+
+            adicionando_funcionario
+
         case 2:
-            busca_funcionario = pesquisar_funcionario()
+            busca_funcionario = pesquisar_funcionario(opcao)
+
+            busca_funcionario
             #2 || Consultar um funcionário.
         case 3:
-            pass
+            funcionario_atualizado = atualizar_funcionario(opcao)
+
+            funcionario_atualizado
             #3 || Atualizar os dados de um funcionário.
+
         case 4:
-            pass
+            deletando_funcionario = excluir_funcionario(opcao)
+
+            deletando_funcionario
             #4 || Excluir um funcionário.
+
         case 5:
-            listando_funcionario = listar_todos_funcionarios()
+            listando_funcionario = listar_todos_funcionarios(opcao)
+
+            listando_funcionario
             #5 || Listar todos os funcionários.
+
         case 0:
             #0 || Sair do sistema.
             break
+
         case _:
             print("Opção invalida \nTente novamente")
 
